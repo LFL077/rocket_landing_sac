@@ -1,0 +1,11 @@
+pyflyt
+wheel
+torch
+numpy
+jj-wingman
+gymnasium
+matplotlib
+seaborn
+imageio
+git+https://github.com/jjshoots/rliable.git
+git+https://github.com/jjshoots/Gymnasium-Robotics.git

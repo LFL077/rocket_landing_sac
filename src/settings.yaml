@@ -1,0 +1,41 @@
+# learning params
+buffer_size: 300000
+buffer_size_debug: 100
+batch_size: 512
+total_steps: 2000000
+repeats_per_buffer: 1
+critic_update_multiplier: 1
+actor_update_multiplier: 1
+discount_factor: 0.99
+learning_rate: 0.0004
+exploration_steps: 0
+
+# core SAC params
+use_entropy: true
+target_entropy: -10.0
+
+# eval settings
+eval_num_episodes: 100
+eval_steps_ratio: 10000
+
+# wingman required params
+debug: false
+train: false
+display: false
+evaluate: false
+
+weights_directory: 'weights'
+version_number: null
+mark_number: 0
+
+increment: false
+logging_interval: 10000
+max_skips: 5
+greater_than: 0.0
+
+wandb: false
+wandb_name: ''
+wandb_notes: ''
+wandb_id: ''
+wandb_entity: 'jjshoots'
+wandb_project: 'CCGE2_oracle_search'
