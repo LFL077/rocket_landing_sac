@@ -4,6 +4,8 @@
 
 `pip3 install -e . -r requirements.txt`
 
+This depends on the env `PyFlyt/Rocket-Landing-v0`, so if you want to modify behaviours install a local, editable version of PyFlyt and use that.
+
 ## Usage
 
 ### Training
