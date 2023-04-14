@@ -105,6 +105,11 @@ class Environment:
         self.env = gym.make(self.env_name, render_mode="human")
         self.reset()
 
+        # gif parameters and variables
+        gifs_save_path = "./rendered_gifs"
+        total_gifs = 0
+        frames = []
+
         while True:
             if net is not None:
                 output = net.actor(gpuize(self.state, cfg.device).unsqueeze(0))
@@ -115,6 +120,30 @@ class Environment:
 
             self.step(action)
 
+            # this captures the camera image for gif
+            if cfg.render_gif:
+                frames.append(self.env.render()[..., :3].astype(np.uint8))
+
             if self.ended:
-                print(self.cumulative_reward)
+
+                if cfg.render_gif:
+                    from PIL import Image
+
+                    print("-----------------------------------------")
+                    print(f"Saving gif...")
+                    print("-----------------------------------------")
+                    frames = [Image.fromarray(frame) for frame in frames]
+                    frames[0].save(
+                        f"{gifs_save_path}/gif{total_gifs}.gif",
+                        save_all=True,
+                        append_images=frames[1:],
+                        duration=1000 / 30,
+                        loop=0,
+                    )
+                    frames = []
+                    total_gifs += 1
+
+                print("-----------------------------------------")
+                print(f"Total Reward: {self.cumulative_reward}")
+                print("-----------------------------------------")
                 self.reset()
