@@ -1,5 +1,9 @@
 # Sup, homie.
 
+Obligatory fancy gif:
+
+![image](./rendered_gifs/gif0.gif)
+
 ## Installation
 
 `pip3 install -e . -r requirements.txt`
