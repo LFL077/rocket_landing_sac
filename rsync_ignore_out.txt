@@ -1,0 +1,13 @@
+/optim_weights
+/venv
+/wandb
+/weights
+/resource
+/.git
+/.vim
+*/*.egg-info
+*.egg-info
+*/__pycache__
+*/archive
+*/textures
+/textures

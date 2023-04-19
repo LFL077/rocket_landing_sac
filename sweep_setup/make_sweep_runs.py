@@ -19,6 +19,8 @@ top_lines = """#!/bin/bash
 # this file has been automatically generated, do not edit manually
 
 source venv/bin/activate
+pip3 uninstall pyflyt
+pip3 install git+https://github.com/GoldenPepperoni/PyFlyt.git@rocket_branch
 declare -a pids=()
 """
 
