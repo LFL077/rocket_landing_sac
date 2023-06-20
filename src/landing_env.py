@@ -30,15 +30,18 @@ class Environment:
         action_low = self.env.action_space.low
         self._action_mid = (action_high + action_low) / 2.0
         self._action_scale = (action_high - action_low) / 2.0
+        
+        self.reward_options = tuple(map(float, cfg.reward_options.split(', ')))
 
         self.reset()
 
     def reset(self):
-        self.state, _ = self.env.reset()
+        self.state, _ = self.env.reset(options=self.reward_options)
 
         self.ended = False
         self.success = False
         self.cumulative_reward = 0.0
+        self.cumulative_fitness = 0.0
 
         return self.state
 
@@ -55,6 +58,7 @@ class Environment:
         self.state, reward, term, trunc, info = self.env.step(action)
         reward = float(reward)
         self.cumulative_reward += reward
+        self.cumulative_fitness += info['fitness']
         self.success |= info["env_complete"]
 
         # if term or trunc or self.success:
@@ -88,11 +92,17 @@ class Environment:
             self.step(action)
 
             if self.ended:
-                eval_scores.append(self.cumulative_reward)
-                # eval_scores.append(float(self.success))
+                if cfg.eval_fitness:
+                    eval_scores.append(self.cumulative_fitness)
+                else:
+                    eval_scores.append(self.cumulative_reward)
+                    # eval_scores.append(float(self.success))
                 self.reset()
 
-        eval_score = np.mean(np.array(eval_scores))
+        if cfg.eval_fitness:
+            eval_score = np.sum(np.array(eval_scores))
+        else:
+            eval_score = np.mean(np.array(eval_scores))
         return eval_score
 
     def display(self, cfg, net=None):

@@ -10,6 +10,8 @@ from landing_env import Environment
 
 
 def train(wm: Wingman):
+    
+   
     # grab config
     cfg = wm.cfg
 
@@ -37,6 +39,7 @@ def train(wm: Wingman):
             )
 
         """ENVIRONMENT INTERACTION"""
+        
         env.reset()
         net.eval()
         net.zero_grad()
@@ -119,8 +122,8 @@ def train(wm: Wingman):
                         optim_dict[key] = optim_set[key].state_dict()
                     torch.save(optim_dict, optim_file)
 
-
 def eval_display(wm: Wingman):
+
     cfg = wm.cfg
     env = setup_env(wm)
 
@@ -137,6 +140,22 @@ def eval_display(wm: Wingman):
             print("---------------------------")
             print("---------------------------")
 
+def eval_fitness(wm: Wingman):
+
+    cfg = wm.cfg
+    env = setup_env(wm)
+    
+    if not cfg.debug:
+        model, _ = setup_nets(wm)
+    else:
+        model = None
+
+    fitness = env.evaluate(cfg, model)
+    print(fitness)
+    print("---------------------------")
+    print("---------------------------")
+
+    return fitness
 
 def setup_env(wm: Wingman):
     cfg = wm.cfg
@@ -193,7 +212,7 @@ def setup_nets(wm: Wingman):
 
 if __name__ == "__main__":
     signal(SIGINT, shutdown_handler)
-
+    
     wm = Wingman(config_yaml="./src/settings.yaml")
 
     """ SCRIPTS HERE """
@@ -202,5 +221,7 @@ if __name__ == "__main__":
         train(wm)
     elif wm.cfg.display or wm.cfg.evaluate:
         eval_display(wm)
+    elif wm.cfg.eval_fitness:
+        eval_fitness(wm)
     else:
         print("Guess this is life now.")

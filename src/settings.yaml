@@ -1,14 +1,15 @@
 # learning params
-buffer_size: 300000
+buffer_size: 100000 #300000
 buffer_size_debug: 100
 batch_size: 512
-total_steps: 2000000
+total_steps: 300000 #500000 #2000000
 repeats_per_buffer: 1
 critic_update_multiplier: 1
 actor_update_multiplier: 1
 discount_factor: 0.99
 learning_rate: 0.0004
 exploration_steps: 0
+reward_options: 5.0, 2.0, 100.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 20.0, 500.0
 
 # core SAC params
 use_entropy: true
@@ -23,6 +24,7 @@ debug: false
 train: false
 display: false
 evaluate: false
+eval_fitness: false
 render_gif: false
 
 weights_directory: 'weights'
@@ -38,5 +40,5 @@ wandb: false
 wandb_name: ''
 wandb_notes: ''
 wandb_id: ''
-wandb_entity: 'jjshoots'
-wandb_project: 'CCGE2_oracle_search'
+wandb_entity: 'lfl077'
+wandb_project: 'rocket_landing_sac'
