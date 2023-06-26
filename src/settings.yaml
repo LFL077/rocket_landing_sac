@@ -2,22 +2,22 @@
 buffer_size: 100000 #300000
 buffer_size_debug: 100
 batch_size: 512
-total_steps: 300000 #500000 #2000000
+total_steps: 200000 #500000 #2000000
 repeats_per_buffer: 1
 critic_update_multiplier: 1
 actor_update_multiplier: 1
 discount_factor: 0.99
 learning_rate: 0.0004
 exploration_steps: 0
-reward_options: 5.0, 2.0, 100.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 20.0, 500.0
+reward_options: 5, 1, 0, 0, 0, 0, 1, 1, 10, 0, 0, 0, 0, 0
 
 # core SAC params
 use_entropy: true
 target_entropy: -10.0
 
 # eval settings
-eval_num_episodes: 100
-eval_steps_ratio: 10000
+eval_num_episodes: 50 #100
+eval_steps_ratio: 5000 #10000
 
 # wingman required params
 debug: false
@@ -30,6 +30,7 @@ render_gif: false
 weights_directory: 'weights'
 version_number: null
 mark_number: 0
+# log_status: true
 
 increment: false
 logging_interval: 10000
