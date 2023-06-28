@@ -1,8 +1,8 @@
 # learning params
-buffer_size: 100000 #300000
+buffer_size: 300000
 buffer_size_debug: 100
 batch_size: 512
-total_steps: 200000 #500000 #2000000
+total_steps: 500000 #2000000
 repeats_per_buffer: 1
 critic_update_multiplier: 1
 actor_update_multiplier: 1
@@ -16,8 +16,8 @@ use_entropy: true
 target_entropy: -10.0
 
 # eval settings
-eval_num_episodes: 50 #100
-eval_steps_ratio: 5000 #10000
+eval_num_episodes: 100
+eval_steps_ratio: 10000
 
 # wingman required params
 debug: false
