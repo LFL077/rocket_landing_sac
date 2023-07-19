@@ -1,5 +1,6 @@
 import math
 from signal import SIGINT, signal
+import numpy as np
 
 import torch
 import torch.optim as optim
@@ -62,8 +63,10 @@ def train(wm: Wingman):
                 # store stuff in mem
                 memory.push([obs, action, rew, next_obs, term])
 
+            # reward and fitness            
             wm.log["episodic_reward"] = env.cumulative_reward
-
+            wm.log["episodic_fitness"] = env.cumulative_fitness
+            
         """TRAINING RUN"""
         dataloader = torch.utils.data.DataLoader(
             memory, batch_size=cfg.batch_size, shuffle=True, drop_last=False
@@ -121,6 +124,26 @@ def train(wm: Wingman):
                     for key in optim_set:
                         optim_dict[key] = optim_set[key].state_dict()
                     torch.save(optim_dict, optim_file)
+
+                # observation states
+                wm.log["train_angular_velocity"] = np.linalg.norm(env.env.ang_vel)
+                wm.log["train_angular_position"] = np.linalg.norm(env.env.ang_pos[:2])
+                wm.log["train_linear_velocity"] = np.linalg.norm(env.env.lin_vel)            
+                wm.log["train_distance_to_pad"] = np.linalg.norm(env.env.distance)
+                wm.log["train_linear_position"] = np.linalg.norm(env.state[10:13])
+                # aux_state
+                # wm.log["train_deflection_S1"] = env.state[20]
+                # wm.log["train_deflection_S2"] = env.state[21]
+                # wm.log["train_deflection_S3"] = env.state[22]
+                # wm.log["train_deflection_S4"] = env.state[23]
+                # wm.log["train_ignition_state"] = env.state[24]
+                wm.log["train_train_remaining_fuel"] = 100 * env.state[25]
+                # wm.log["train_throttle"] = env.state[26]
+                # wm.log["train_gimbal_state1"] = env.state[27]
+                # wm.log["train_gimbal_state2"] = env.state[28]
+                # the factor, may be useful
+                wm.log["train_curriculum_factor"] = env.env.faktor
+                wm.wandb_log()
 
 def eval_display(wm: Wingman):
 
