@@ -9,7 +9,7 @@ actor_update_multiplier: 1
 discount_factor: 0.99
 learning_rate: 0.0004
 exploration_steps: 0
-reward_options: 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 2, 100, 1, 1, 20, 0, 0, 500
+reward_options: 0, 5, 2, 0, 100, 0, 1, 0, 3, 0, 0, 0, 20, 0, 0, 500
 seed: 13
 
 # core SAC params
